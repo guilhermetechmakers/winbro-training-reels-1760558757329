@@ -1,68 +1,188 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+/* Winbro Design System with CSS Custom Properties */
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    /* Winbro Color System - HSL format for consistency */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 0 0% 20%; /* #333333 */
+    
+    --primary: 210 100% 50%; /* #007BFF */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    
+    --secondary: 0 0% 96%; /* #F7F7F7 */
+    --secondary-foreground: 0 0% 20%; /* #333333 */
+    
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 0 0% 20%; /* #333333 */
+    
+    --border: 210 16% 82%; /* #CED4DA */
+    --input: 210 16% 82%; /* #CED4DA */
+    --ring: 210 100% 50%; /* #007BFF */
+    
+    /* Winbro specific design tokens */
+    --radius: 0.5rem; /* 8px default radius */
+    
+    /* Surface colors */
+    --surface-base: 0 0% 100%; /* #FFFFFF */
+    --surface-sunken: 0 0% 97%; /* #F7F7F7 */
+    --surface-elevated: 0 0% 88%; /* #E0E0E0 */
+    
+    /* Text colors */
+    --text-primary: 0 0% 20%; /* #333333 */
+    --text-secondary: 0 0% 40%; /* #666666 */
+    --text-muted: 0 0% 63%; /* #A0A0A0 */
+    
+    /* Brand colors */
+    --brand-primary: 210 100% 50%; /* #007BFF */
+    --brand-hover: 210 100% 35%; /* #0056B3 */
+    --brand-pressed: 210 100% 26%; /* #004085 */
+    --brand-subtle: 210 100% 94%; /* #F0F0F0 */
+    
+    /* State colors */
+    --state-success: 142 76% 36%; /* #28A745 */
+    --state-warning: 45 100% 51%; /* #FFC107 */
+    --state-danger: 354 70% 54%; /* #DC3545 */
+    --state-info: 188 78% 41%; /* #17A2B8 */
+    --state-success-bg: 210 100% 95%; /* #E7F1FF */
+    --state-text-on-colored: 0 0% 100%; /* #FFFFFF */
+    
+    /* Divider colors */
+    --divider-strong: 210 16% 82%; /* #CED4DA */
+    --divider-subtle: 210 16% 89%; /* #DEE2E6 */
   }
+  
+  .dark {
+    /* Dark mode colors if needed in the future */
+    --background: 0 0% 4%; /* Dark background */
+    --foreground: 0 0% 95%; /* Light text */
+    --card: 0 0% 4%; /* Dark card */
+    --card-foreground: 0 0% 95%; /* Light card text */
+    --border: 0 0% 15%; /* Dark border */
+    --input: 0 0% 15%; /* Dark input */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Typography hierarchy based on Winbro design system */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-semibold;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    @apply text-h1;
+  }
+  
+  h2 {
+    @apply text-h2;
+  }
+  
+  h3 {
+    @apply text-h3;
+  }
+  
+  /* Link styles */
+  a {
+    @apply text-brand-primary underline;
+    transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
   a:hover {
-    color: #747bff;
+    @apply text-brand-hover;
   }
+  
+  a:focus {
+    @apply text-brand-pressed;
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  
+  /* Button base styles */
   button {
-    background-color: #f9f9f9;
+    @apply transition-all duration-200;
+    font-family: inherit;
   }
+  
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Winbro component patterns */
+  .btn-primary {
+    @apply bg-brand-primary text-state-text-on-colored px-6 py-3 rounded-md font-medium;
+    @apply hover:bg-brand-hover active:bg-brand-pressed;
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-surface-base text-brand-primary border border-brand-primary px-6 py-3 rounded-md font-medium;
+    @apply hover:bg-brand-subtle active:bg-brand-pressed active:text-state-text-on-colored;
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-surface-base border border-divider-strong rounded-md p-4;
+    @apply hover:shadow-popover transition-shadow duration-200;
+  }
+  
+  .input {
+    @apply bg-surface-base border border-divider-strong rounded-md px-3 py-2;
+    @apply placeholder:text-text-muted focus:border-brand-primary focus:ring-1 focus:ring-brand-primary;
+    @apply transition-all duration-200;
+  }
+  
+  .skeleton {
+    @apply bg-surface-elevated animate-shimmer;
+    background: linear-gradient(90deg, #E0E0E0 25%, #F0F0F0 50%, #E0E0E0 75%);
+    background-size: 200% 100%;
+  }
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface-sunken;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-divider-strong rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-text-muted;
 }
